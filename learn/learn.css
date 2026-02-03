@@ -406,6 +406,175 @@ body::after {
     color: var(--text-muted);
 }
 
+
+/* ===== ACCORDION STYLES FOR HIDDEN MODULES ===== */
+.accordion-section {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.accordion-toggle {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 18px 24px;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: #4526D0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-top: 8px;
+}
+
+.accordion-toggle:hover {
+    background: rgba(69, 38, 208, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border-color: rgba(69, 38, 208, 0.3);
+}
+
+.toggle-icon {
+    transition: transform 0.35s ease;
+    font-size: 1.3rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+.toggle-icon.expanded {
+    transform: rotate(180deg);
+}
+
+.hidden-modules {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.45s ease, max-height 0.5s ease, margin-top 0.4s ease;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.hidden-modules.expanded {
+    opacity: 1;
+    max-height: 5000px; /* Safe for ~10 modules */
+    margin-top: 24px;
+    padding-top: 8px;
+}
+
+/* Reuse existing stagger animation for hidden modules on expand */
+.hidden-modules.expanded .module-card {
+    animation-name: staggerIn;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+}
+
+.hidden-modules.expanded .module-card:nth-child(1) { animation-delay: 0.1s; }
+.hidden-modules.expanded .module-card:nth-child(2) { animation-delay: 0.2s; }
+.hidden-modules.expanded .module-card:nth-child(3) { animation-delay: 0.3s; }
+.hidden-modules.expanded .module-card:nth-child(n+4) { animation-delay: 0.4s; }
+
+/* Fix spacing: Prevent double gaps between visible modules and accordion */
+.modules-grid > .module-card:last-of-type {
+    margin-bottom: 16px; /* Adjust based on your design */
+}
+
+/* ===== PER-MODULE CHAPTER TOGGLE ===== */
+.chapters-toggle {
+    background: rgba(69, 38, 208, 0.08);
+    border: 1px solid rgba(69, 38, 208, 0.25);
+    border-radius: 12px;
+    padding: 14px 20px;
+    width: 100%;
+    margin-top: 16px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: #4526D0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.chapters-toggle:hover {
+    background: rgba(69, 38, 208, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: rgba(69, 38, 208, 0.4);
+}
+
+.toggle-icon {
+    transition: transform 0.35s ease;
+    font-size: 1.2rem;
+    min-width: 24px;
+    text-align: center;
+}
+
+.toggle-icon.expanded {
+    transform: rotate(180deg);
+}
+
+/* Hidden chapters container */
+.hidden-chapters {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: 
+        opacity 0.4s ease,
+        max-height 0.45s ease,
+        margin-top 0.3s ease;
+    margin-top: 0;
+    padding-top: 0;
+    margin-bottom: 8px;
+}
+
+.hidden-chapters.expanded {
+    opacity: 1;
+    max-height: 2500px; /* Safe for ~15 chapters */
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+/* Allow module card to expand smoothly */
+.module-card {
+    overflow: visible !important; /* Critical override */
+    position: relative;
+}
+
+/* Optional: Fade-in animation for revealed chapters */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(8px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+.hidden-chapters.expanded .chapter-card {
+    animation-name: fadeIn;
+    animation-fill-mode: forwards;
+}
+
 .chapter-card {
     display: flex;
     justify-content: space-between;

@@ -114,42 +114,127 @@ errorDiv.classList.remove('show');
 RENDER MODULES
 ========================= */
 function renderModules() {
-const container = document.getElementById("modules-container");
-container.innerHTML = "";
+    const container = document.getElementById("modules-container");
+    container.innerHTML = "";
 
-learningData.modules.forEach(m => {
-const chaptersHTML = m.chapters.map(c => {
-const status = getChapterStatus(c.id);
-const statusBadge = status ? `<span class="chapter-status ${status}">${status === 'completed' ? '✓ Completed' : '⏳ In Progress'}</span>` : '';
-const thumbnailUrl = `https://img.youtube.com/vi/${c.videoId}/mqdefault.jpg`;
-return `
-<div class="chapter-card" onclick="playChapter('${m.id}','${c.id}')">
-<div class="chapter-thumbnail">
-<img src="${thumbnailUrl}" alt="${c.title}" loading="lazy">
-</div>
-<div class="chapter-content">
-<span>${c.title}${statusBadge}</span>
-<p class="chapter-description">${c.description}</p>
-</div>
-<div class="chapter-actions">
-<button>▶ Play</button>
-</div>
-</div>`;
-}).join("");
+    if (!learningData.modules || learningData.modules.length === 0) {
+        container.innerHTML = '<p class="no-modules">No modules available.</p>';
+        return;
+    }
 
-const card = document.createElement("div");
-card.className = "module-card";
-card.innerHTML = `
-<div class="module-header">
-<div>
-<h3>${m.title}</h3>
-<p>${m.description}</p>
-</div>
-</div>
-${chaptersHTML}`;
+    learningData.modules.forEach((m, moduleIndex) => {
+        // Split chapters: first 2 visible, rest hidden
+        const visibleChapters = m.chapters.slice(0, 2); // Change Here If you wish to change the number of visible chapters...
+        const hiddenChapters = m.chapters.slice(2); // And Here
+        const safeModuleId = `module-${m.id.replace(/[^a-zA-Z0-9]/g, '-')}`;
 
-container.appendChild(card);
-});
+        // Render visible chapters (FIXED YouTube URL: removed spaces)
+        const visibleHTML = visibleChapters.map(c => {
+            const status = getChapterStatus(c.id);
+            const badge = status ? `<span class="chapter-status ${status}">${status === 'completed' ? '✓' : '⏳'} ${status === 'completed' ? 'Completed' : 'In Progress'}</span>` : '';
+            const thumb = `https://img.youtube.com/vi/${c.videoId}/mqdefault.jpg`; // CRITICAL FIX: removed spaces
+            return `
+            <div class="chapter-card" onclick="playChapter('${m.id}','${c.id}')">
+                <div class="chapter-thumbnail">
+                    <img src="${thumb}" alt="${c.title}" loading="lazy">
+                </div>
+                <div class="chapter-content">
+                    <span>${c.title}${badge}</span>
+                    <p class="chapter-description">${c.description}</p>
+                </div>
+                <div class="chapter-actions">
+                    <button aria-label="Play ${c.title}">▶</button>
+                </div>
+            </div>`;
+        }).join('');
+
+        // Build hidden chapters section + toggle if needed
+        let hiddenSection = '';
+        if (hiddenChapters.length > 0) {
+            const hiddenHTML = hiddenChapters.map(c => {
+                const status = getChapterStatus(c.id);
+                const badge = status ? `<span class="chapter-status ${status}">${status === 'completed' ? '✓' : '⏳'} ${status === 'completed' ? 'Completed' : 'In Progress'}</span>` : '';
+                const thumb = `https://img.youtube.com/vi/${c.videoId}/mqdefault.jpg`; // CRITICAL FIX
+                return `
+                <div class="chapter-card" onclick="playChapter('${m.id}','${c.id}')">
+                    <div class="chapter-thumbnail">
+                        <img src="${thumb}" alt="${c.title}" loading="lazy">
+                    </div>
+                    <div class="chapter-content">
+                        <span>${c.title}${badge}</span>
+                        <p class="chapter-description">${c.description}</p>
+                    </div>
+                    <div class="chapter-actions">
+                        <button aria-label="Play ${c.title}">▶</button>
+                    </div>
+                </div>`;
+            }).join('');
+
+            hiddenSection = `
+                  <button class="chapters-toggle" 
+                          aria-expanded="false" 
+                          aria-controls="hidden-ch-${safeModuleId}"
+                          data-module="${safeModuleId}"
+                          data-original-text="View ${hiddenChapters.length} more chapter${hiddenChapters.length > 1 ? 's' : ''}">
+                      <span>View ${hiddenChapters.length} more chapter${hiddenChapters.length > 1 ? 's' : ''}</span>
+                      <i class="fas fa-chevron-down toggle-icon"></i>
+                  </button>
+                  <div id="hidden-ch-${safeModuleId}" 
+                      class="hidden-chapters" 
+                      aria-hidden="true">
+                      ${hiddenHTML}
+                  </div>`;
+        }
+
+        // Create module card with stagger animation class
+        const card = document.createElement("div");
+        card.className = `module-card module-card-${moduleIndex + 1}`;
+        card.innerHTML = `
+            <div class="module-header">
+                <div>
+                    <h3>${m.title}</h3>
+                    <p>${m.description}</p>
+                </div>
+            </div>
+            ${visibleHTML}
+            ${hiddenSection}`;
+        container.appendChild(card);
+    });
+
+    // Attach toggle listeners AFTER DOM insertion   
+    document.querySelectorAll('.chapters-toggle').forEach(btn => {
+          btn.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            const newState = !isExpanded;
+            const targetId = this.getAttribute('aria-controls');
+            const target = document.getElementById(targetId);
+            const icon = this.querySelector('.toggle-icon');
+            const textSpan = this.querySelector('span');
+            const originalText = this.getAttribute('data-original-text');
+            
+            // Update states
+            this.setAttribute('aria-expanded', newState);
+            if (target) target.setAttribute('aria-hidden', !newState);
+            if (icon) icon.classList.toggle('expanded', newState);
+            if (target) target.classList.toggle('expanded', newState);
+            
+            // Toggle button text
+            if (newState) {
+                textSpan.textContent = 'Collapse';
+            } else {
+                textSpan.textContent = originalText;
+            }
+            
+            // Optional: Trigger stagger animation on expand
+            if (newState && target) {
+                target.querySelectorAll('.chapter-card').forEach((card, i) => {
+                    card.style.animation = `fadeIn 0.5s ease-out ${i * 0.1}s forwards`;
+                    card.style.opacity = '0';
+                    setTimeout(() => { card.style.opacity = '1'; }, 50);
+                });
+            }
+        });
+    });
 }
 
 /* =========================
