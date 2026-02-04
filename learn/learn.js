@@ -1,8 +1,14 @@
 /* =========================
 DATA & STATE
 ========================= */
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const supabase = createClient(
+  "https://nsmioyqhnefljfpmzksk.supabase.co",
+  "sb_publishable_skwyA6GX4YTiiRpvF8PWFw_iHUFgXCZ"
+);
+
 let learningData = { modules: [] };
-const API_BASE_URL = 'http://localhost:5000';
 
 let player = null;
 let currentModule = null;
@@ -18,24 +24,58 @@ DATA LOADING
 ========================= */
 async function loadLearningData() {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/learning-data`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch learning data');
-    }
-    learningData = await response.json();
-    console.log('Learning data loaded from API');
+    const { data, error } = await supabase
+      .from("modules")
+      .select(`
+        id,
+        title,
+        description,
+        duration,
+        chapters (
+          id,
+          title,
+          video_id,
+          duration,
+          description,
+          links
+        )
+      `)
+      .order("sort_order", { ascending: true })
+      .order("sort_order", { foreignTable: "chapters", ascending: true });
+
+    if (error) throw error;
+
+    // 🔁 Transform to match fallback JSON keys
+    learningData = {
+      modules: data.map(module => ({
+        id: module.id,
+        title: module.title,
+        description: module.description,
+        duration: module.duration,
+        chapters: module.chapters.map(chapter => ({
+          id: chapter.id,
+          title: chapter.title,
+          videoId: chapter.video_id,
+          duration: chapter.duration,
+          description: chapter.description,
+          links: chapter.links || []
+        }))
+      }))
+    };
+
+    console.log("Learning data loaded from Supabase");
     renderModules();
+
   } catch (error) {
-    console.error('Error loading learning data:', error);
-    // Fallback: try to load from local JSON if API fails
-    console.warn('Falling back to local learning-data.json');
+    console.error("Supabase failed, using local JSON", error);
+
     try {
-      const localResponse = await fetch('./learning-data.json');
+      const localResponse = await fetch("./learning-data.json");
       learningData = await localResponse.json();
       renderModules();
     } catch (localError) {
-      console.error('Error loading local data:', localError);
-      showError('Failed to load learning data. Please try refreshing the page.');
+      console.error("Fallback failed", localError);
+      showError("Failed to load learning data.");
     }
   }
 }
