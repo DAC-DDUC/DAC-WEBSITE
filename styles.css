@@ -471,6 +471,8 @@ ABOUT SECTION
     margin-bottom: 60px;
     color: white;
     letter-spacing: -0.5px;
+    display: flex;
+    justify-content: center;
 }
 
 .info-row {
