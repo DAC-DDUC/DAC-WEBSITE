@@ -1191,6 +1191,8 @@ TEAM SECTION
     margin: 0 0 20px 0;
     text-align: left;
     line-height: 1.5;
+    display : flex;
+    flex-direction: column;
 }
 
 .team-card .team-name {
@@ -1204,6 +1206,7 @@ TEAM SECTION
     color: #B1B1B1;
     font-weight: normal;
     font-size: 0.9rem;
+    max-width: 200px;
 }
 
 .card-footer {
