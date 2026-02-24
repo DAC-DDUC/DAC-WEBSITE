@@ -1787,7 +1787,7 @@ input:checked + .slider:before {
 /* ===== JSON EDITOR STYLES ===== */
 .json-editor-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 24px;
 }
 

@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="./admin/admin.css" />
+    <link rel="shortcut icon" href="./assets/dac-logo.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="./assets/dac-logo.png">
 </head>
 <body>
     <div class="admin-container">
@@ -16,15 +18,19 @@
         <!-- Sidebar -->
         <aside class="admin-sidebar">
             <div class="sidebar-header">
-                <div class="logo-container">
-                    <div class="logo-icon">
-                        <i class="fas fa-brain"></i>
+                <a href="/" style="text-decoration: none;">
+                    <div class="logo-container">
+                        <div class="logo-icon">
+                            
+                            <i class="fas fa-brain"></i>
+                            
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">DAC</span>
+                            <span class="logo-subtitle">Admin Panel</span>
+                        </div>
                     </div>
-                    <div class="logo-text">
-                        <span class="logo-title">DAC</span>
-                        <span class="logo-subtitle">Admin Panel</span>
-                    </div>
-                </div>
+                </a>
 
                 <div class="admin-profile">
                     <div class="profile-avatar">AD</div>
@@ -111,41 +117,7 @@
                         </button>
                     </div>
 
-                    <!-- Editor Panel -->
-                    <div class="panel json-editor-panel">
-                        <div class="panel-header">
-                            <h3><i class="fas fa-code"></i> JSON Editor</h3>
-                            <div class="editor-controls">
-                                <button class="editor-btn" id="format-json" title="Format & Pretty-print JSON">
-                                    <i class="fas fa-indent"></i> Format
-                                </button>
-                                <button class="editor-btn" id="validate-json" title="Validate JSON syntax">
-                                    <i class="fas fa-check-circle"></i> Validate
-                                </button>
-                                <button class="editor-btn" id="copy-json" title="Copy JSON to clipboard">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                                <button class="editor-btn" id="clear-json" title="Clear editor">
-                                    <i class="fas fa-trash"></i> Clear
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="json-editor-wrapper">
-                            <textarea id="json-editor" class="json-editor" placeholder="Paste JSON or download from above..."></textarea>
-                            <div id="editor-line-numbers" class="editor-line-numbers"></div>
-                        </div>
-
-                        <div id="editor-status" class="editor-status hidden">
-                            <span id="editor-status-message"></span>
-                        </div>
-
-                        <div id="editor-stats" class="editor-stats">
-                            <span>Lines: <span id="line-count">0</span></span>
-                            <span>Size: <span id="size-count">0</span> B</span>
-                            <span>Valid: <span id="valid-status" class="status-invalid">?</span></span>
-                        </div>
-                    </div>
+                    
 
                     <!-- Upload Panel -->
                     <div class="panel">
@@ -188,6 +160,41 @@
                         </div>
                     </div>
                 </div>
+                <!-- Editor Panel -->
+                    <div class="panel json-editor-panel">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-code"></i> JSON Editor</h3>
+                            <div class="editor-controls">
+                                <button class="editor-btn" id="format-json" title="Format & Pretty-print JSON">
+                                    <i class="fas fa-indent"></i> Format
+                                </button>
+                                <button class="editor-btn" id="validate-json" title="Validate JSON syntax">
+                                    <i class="fas fa-check-circle"></i> Validate
+                                </button>
+                                <button class="editor-btn" id="copy-json" title="Copy JSON to clipboard">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button class="editor-btn" id="clear-json" title="Clear editor">
+                                    <i class="fas fa-trash"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="json-editor-wrapper">
+                            <textarea id="json-editor" class="json-editor" placeholder="Paste JSON or download from above..."></textarea>
+                            <div id="editor-line-numbers" class="editor-line-numbers"></div>
+                        </div>
+
+                        <div id="editor-status" class="editor-status hidden">
+                            <span id="editor-status-message"></span>
+                        </div>
+
+                        <div id="editor-stats" class="editor-stats">
+                            <span>Lines: <span id="line-count">0</span></span>
+                            <span>Size: <span id="size-count">0</span> B</span>
+                            <span>Valid: <span id="valid-status" class="status-invalid">?</span></span>
+                        </div>
+                    </div>
             </section>
 
             <!-- Users -->

@@ -142,13 +142,15 @@ HERO SECTION
 
 .logo-container {
     display: flex;
-    align-items: center;
+    align-items: anchor-center;
     gap: 15px;
     text-decoration: none;
     color: white;
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     flex: 1;
+    margin-top: 1rem;
+    margin-left: 1rem;
 }
 
 .logo-container:hover {
@@ -159,6 +161,7 @@ HERO SECTION
     width: 200px;
     height: auto;
     fill: white;
+    max-width: 7rem;
 }
 
 .logo-text {
@@ -1128,18 +1131,80 @@ TEAM SECTION
     text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
+
+/* DESKTOP (default) */
 .core-team-container {
+  display: grid;
+  gap: 20px;
+  width: 92%;
+  max-width: 1350px;
+  padding: 20px 10px;
+  margin: 0 auto;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.team-card {
+  min-width: 240px;
+  flex-shrink: 0;
+}
+
+/* Large tablets */
+@media (max-width: 1200px) {
+    .core-team-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+    .core-team-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Large phones */
+/* ========================================
+FIXED: Endless carousel only on mobile
+Grid-based single row auto columns
+======================================== */
+@media (max-width: 600px) {
+  .team-section-wrapper {
+    padding: 80px 0 60px 0;
+  }
+
+  .team-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Double the content by duplicating cards in HTML (or via JS), 
+     but if you can't modify HTML, we simulate with ::after */
+  .core-team-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 15px;
-    width: 92%;
-    max-width: 1350px;
-    padding: 20px 10px;
-    overflow-x: auto;
-    box-sizing: border-box;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    padding: 20px 15px;
+    min-width: max-content;
+    animation: teamScroll 20s linear infinite;
+  }
+
+  .core-team-container:hover {
+    animation-play-state: paused;
+  }
+
+  /* Ensure cards don't shrink */
+  .team-card {
+    flex: 0 0 240px; /* DO NOT GROW, DO NOT SHRINK, FIXED BASIS */
+  }
+
+  .team-card .image-container {
+    width: 100%;
+  }
+
+  @keyframes teamScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-50%)); } 
+  }
 }
 
 .core-team-container::-webkit-scrollbar {

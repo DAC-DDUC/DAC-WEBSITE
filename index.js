@@ -161,12 +161,20 @@ async function loadTeamData() {
 
 function renderTeam() {
   const container = document.querySelector(".core-team-container");
-  
   if (!container) return;
 
   container.innerHTML = "";
 
-  teamData.members.forEach(m => {
+  // ADDED: detect mobile
+  const isMobile = window.innerWidth <= 600;
+
+  // ADDED: create base cards
+  const members = teamData.members;
+
+  // ADDED: duplicate list for infinite effect
+  const renderList = isMobile ? [...members, ...members] : members;
+
+  renderList.forEach(m => {
     const newMember = document.createElement("div");
     newMember.className = "team-card";
 
@@ -190,7 +198,22 @@ function renderTeam() {
 
     container.appendChild(newMember);
   });
+
+  // FIX: remove class first (prevents desktop issues)
+  container.classList.remove("carousel-track");
+
+  // ADDED: activate carousel animation on mobile
+  if (isMobile) {
+    // FIX: force reflow so animation calculates correct width
+    container.offsetWidth;
+    container.classList.add("carousel-track");
+  }
 }
+
+window.addEventListener("resize", () => {
+  renderTeam();
+});
+
 
 /* =========================
 CONTACT FORM SUBMISSION
@@ -295,9 +318,13 @@ function initApp() {
   loadTeamData();
 }
 
+
+
 // Load when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
   initApp();
 }
+
+

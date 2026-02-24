@@ -1,3 +1,49 @@
-analytics bootcamp  --> /learn
-project labs        --> show case
-skills trcaks & certification --> 
+
+Things required to be done:
+
+Minor changes: 
+
+    Addition:
+        --> Link the analytics bootcamp card to /learn done
+        --> Link project labs to /projects a new page
+        done
+        --> Link Skils and certification card to /roadmap a new page
+        done
+        --> Link Industry card to /past-speakers 
+        done
+        --> Link Case comp link the google sheet as a web page to the website.
+        done
+
+    Deletion:
+        --> Remove 
+            ..The testimonials section
+            ..Impacts and achievements
+            ..Timeline
+
+Major Changes:
+
+    Addition:
+        --> New page 
+            /blogs
+            /projects
+            /roadmap
+            /past-speakers
+            case comp
+
+        --> Implement backend for 
+            /blogs
+            /projects
+            /roadmap
+            /past-speakers
+
+            ---> Modular, Backend edit
+
+        --> Impelement meesages backend
+            
+    Deletion:       
+        
+
+Bugs:
+  --> Fix the team memebers card visual. (Fixed)
+  --> Make the viewport-based layout constant.
+  -->
