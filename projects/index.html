@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analytics Club - Projects</title>
+    <link rel="icon" href="/images/photo1769090522.jpg" type="image/png">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles: Located in the same ./projects/ folder -->
+    <link rel="stylesheet" href="./projects/project.css">
+    <link rel="shortcut icon" href="./assets/dac-logo.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="./assets/dac-logo.png">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="logo-container" onclick="window.location.href='/'">
+            <!-- Assets are in root /assets, so we go up one level (../) from /projects -->
+            <img src="../assets/logo.png" alt="DAC logo" class="logo-icon" style="width: 50px;">
+            <div class="logo-text">
+                <span class="logo-title">DAC</span>
+                <span class="logo-subtitle">Projects</span>
+            </div>
+        </div>
+
+        <nav class="nav-pill">
+            <a href="/#about" class="nav-link">About</a>
+            <a href="/#solutions" class="nav-link">Initiatives</a>
+            <a href="/#events" class="nav-link">Events</a>
+            <a href="/#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <div class="cta-container">
+            <a href="/" class="join-btn">Back to Home</a>
+        </div>
+    </header>
+
+    <!-- Main Content: Bento Gallery -->
+    <div class="projects-container">
+        <section class="module-section bento-section">
+            
+            <div class="dac-header">
+                <div class="heading-wrapper">
+                    <i class="fa-solid fa-layer-group floating-icon i1"></i>
+                    <i class="fa-solid fa-code floating-icon i2"></i>
+                    <i class="fa-solid fa-chart-pie floating-icon i3"></i>
+                    <i class="fa-solid fa-robot floating-icon i4"></i>
+                    <h1>DAC Projects</h1>
+                </div>
+                <p>Drag, drop, and explore our curated collection</p>
+            </div>
+
+            <!-- Grid Container -->
+            <div id="bento-grid" class="bento-grid">
+                <!-- Items injected by JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- BENTO MODAL OVERLAY -->
+    <div id="bento-modal" class="bento-modal-overlay">
+        <div class="bento-modal-content">
+            <button id="bento-close-btn" class="bento-close-btn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <div class="bento-main-viewer">
+                <div id="bento-media-container" class="bento-media-container">
+                    <!-- Media injected here -->
+                </div>
+                <div class="bento-media-info">
+                    <h3 id="bento-modal-title">Project Title</h3>
+                    <p id="bento-modal-desc">Project Description</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Draggable Dock -->
+        <div id="bento-dock" class="bento-dock">
+            <div class="bento-dock-inner" id="bento-dock-items">
+                <!-- Thumbnails injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-section">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p>Data Analytics Club — DDUC</p>
+                <p>A student initiative for practical data skills.</p>
+            </div>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/company/data-analytics-club-dduc-du/" target="_blank">LinkedIn</a>
+                <a href="https://www.instagram.com/dataanalyticsclubdduc/" target="_blank">Instagram</a>
+                <a href="https://dducollegedu.ac.in/" target="_blank">DDU College</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 DAC — Made by Technical Team
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic: Located in the same ./projects/ folder -->
+    <script type="module" src="./projects/project.js"></script>
+</body>
+</html>
