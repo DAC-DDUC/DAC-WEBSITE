@@ -8,8 +8,8 @@ BENTO GALLERY WITH SUPABASE
 
 // --- CONFIGURATION ---
 const supabase = createClient(
-  "https://nsmioyqhnefljfpmzksk.supabase.co",
-  "sb_publishable_skwyA6GX4YTiiRpvF8PWFw_iHUFgXCZ"
+    "https://nsmioyqhnefljfpmzksk.supabase.co",
+    "sb_publishable_skwyA6GX4YTiiRpvF8PWFw_iHUFgXCZ"
 );
 
 // Fallback Data (Used if DB is empty or fails)
@@ -133,80 +133,11 @@ async function loadProjects() {
 INITIALIZATION
 ========================= */
 function init() {
-    renderGrid();
+    renderKineticShowcase();
     renderDock();
     setupModalEvents();
     setupDockDrag();
-}
-
-/* =========================
-RENDER GRID
-========================= */
-function renderGrid() {
-    gridContainer.innerHTML = '';
-    
-    // 1. Create and append all items normally
-    mediaItems.forEach((item, index) => {
-        const el = document.createElement('div');
-        el.className = `bento-item ${item.spanClass}`;
-        el.dataset.index = index;
-
-        // Content Generation
-        let mediaHtml = '';
-        if (item.type === 'video') {
-            mediaHtml = `
-                <div class="bento-buffering"><div class="spinner"></div></div>
-                <video class="bento-media" src="${item.url}" muted loop playsinline preload="metadata"></video>
-            `;
-        } else {
-            mediaHtml = `<img class="bento-media" src="${item.url}" alt="${item.title}" loading="lazy">`;
-        }
-
-        el.innerHTML = `
-            ${mediaHtml}
-            <div class="bento-item-overlay">
-                <div class="bento-item-title">${item.title}</div>
-                <div class="bento-item-desc">${item.desc}</div>
-            </div>
-        `;
-
-        // Click to Open Modal
-        el.addEventListener('click', (e) => {
-            if (!isDraggingGrid) openModal(index);
-        });
-
-        // Drag Events for Reordering
-        el.addEventListener('mousedown', handleMouseDown);
-        el.addEventListener('touchstart', handleTouchStart, { passive: false });
-
-        gridContainer.appendChild(el);
-
-        // Video Observer Logic
-        if (item.type === 'video') {
-            const video = el.querySelector('video');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        video.play().catch(() => {}); 
-                        el.querySelector('.bento-buffering').style.display = 'none';
-                    } else {
-                        video.pause();
-                    }
-                });
-            }, { threshold: 0.5 });
-            observer.observe(video);
-        }
-    });
-
-    // 2. EXCEPTION LOGIC: Move the last item to be before the second-to-last item
-    const allItems = Array.from(gridContainer.children);
-    if (allItems.length > 2) {
-        const lastItem = allItems[allItems.length - 1];       // Index 6 (Item 7)
-        const secondLastItem = allItems[allItems.length - 2]; // Index 5 (Item 6)
-        
-        // Insert the last item BEFORE the second-to-last item
-        gridContainer.insertBefore(lastItem, secondLastItem);
-    }
+    setupPageAnimations();
 }
 
 /* =========================
@@ -217,17 +148,147 @@ function renderDock() {
     mediaItems.forEach((item, index) => {
         const dot = document.createElement('div');
         dot.className = `bento-dock-item ${index === currentItemIndex ? 'active' : ''}`;
-        
+
         let mediaHtml = '';
         if (item.type === 'video') {
             mediaHtml = `<video src="${item.url}" muted loop playsinline></video>`;
         } else {
             mediaHtml = `<img src="${item.url}" alt="${item.title}">`;
         }
-        
+
         dot.innerHTML = mediaHtml;
         dot.addEventListener('click', () => switchItem(index));
         dockItemsContainer.appendChild(dot);
+    });
+}
+
+/* =========================
+KINETIC SHOWCASE (Vertical Gear)
+========================= */
+function renderKineticShowcase() {
+    const leftRack = document.getElementById('rack-left');
+    const rightRack = document.getElementById('rack-right');
+    if (!leftRack || !rightRack) return;
+
+    leftRack.innerHTML = '';
+    rightRack.innerHTML = '';
+
+    let leftCount = 0;
+    let rightCount = 0;
+
+    mediaItems.forEach((item, index) => {
+        const node = document.createElement('div');
+        node.className = 'k-node';
+        node.dataset.index = index;
+
+        let mediaHtml = '';
+        if (item.type === 'video') {
+            mediaHtml = `<video class="k-media" src="${item.url}" muted loop playsinline></video>`;
+        } else {
+            mediaHtml = `<img class="k-media" src="${item.url}" alt="${item.title}">`;
+        }
+
+        node.innerHTML = `
+            <div class="k-icon">${(index + 1).toString().padStart(2, '0')}</div>
+            <div class="k-glass-card">
+                <h3>${item.title}</h3>
+                <p>${item.desc}</p>
+                ${mediaHtml}
+            </div>
+        `;
+
+        node.addEventListener('click', () => {
+            openModal(index);
+        });
+
+        // Alternate sides
+        if (index % 2 === 0) {
+            // Left Rack - moves UP
+            // Top starts at 20vh, each node is 70vh lower
+            node.style.top = `${20 + (leftCount * 80)}vh`;
+            leftRack.appendChild(node);
+            leftCount++;
+        } else {
+            // Right Rack - moves DOWN
+            // Bottom starts at 20vh, each node is 70vh higher (absolute bottom)
+            node.style.bottom = `${20 + (rightCount * 80)}vh`;
+            rightRack.appendChild(node);
+            rightCount++;
+        }
+    });
+
+    const maxItems = Math.max(leftCount, rightCount);
+    // Base height for the scroll duration
+    const requiredHeight = Math.max(maxItems * 80 + 100, 200);
+    document.getElementById('kinetic-showcase').style.height = `${requiredHeight}vh`;
+
+    setupKineticAnimations(requiredHeight);
+}
+
+function setupKineticAnimations(totalVh) {
+    if (typeof gsap === 'undefined') return;
+
+    ScrollTrigger.getAll().forEach(t => {
+        if (t.vars.id === "kinetic-main") t.kill();
+    });
+
+    const mainTl = gsap.timeline({
+        scrollTrigger: {
+            id: "kinetic-main",
+            trigger: "#kinetic-showcase",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.5
+        }
+    });
+
+    // Assume 1 full rotation (360) per 100vh
+    mainTl.to("#kinetic-main-gear", {
+        rotation: (totalVh / 100) * 360,
+        ease: "none"
+    }, 0);
+
+    // Left rack translates up 
+    mainTl.fromTo("#rack-left",
+        { y: "0vh" },
+        { y: `-${totalVh - 100}vh`, ease: "none" }, 0
+    );
+
+    // Right rack translates down
+    mainTl.fromTo("#rack-right",
+        { y: "0vh" },
+        { y: `${totalVh - 100}vh`, ease: "none" }, 0
+    );
+
+    // Node Highlighting
+    const kNodes = document.querySelectorAll(".k-node");
+    kNodes.forEach(node => {
+        ScrollTrigger.create({
+            trigger: "#kinetic-showcase",
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                const rect = node.getBoundingClientRect();
+                const viewportCenter = window.innerHeight / 2;
+                const nodeCenter = rect.top + rect.height / 2;
+
+                // If node is within 180px of center vertical
+                if (Math.abs(nodeCenter - viewportCenter) < 180) {
+                    if (!node.classList.contains('active')) {
+                        node.classList.add('active');
+                        const vid = node.querySelector('video');
+                        if (vid) vid.play().catch(() => { });
+                        gsap.to("#kinetic-main-gear", { scale: 1.05, duration: 0.15, yoyo: true, repeat: 1 });
+                    }
+                } else {
+                    if (node.classList.contains('active')) {
+                        node.classList.remove('active');
+                        const vid = node.querySelector('video');
+                        if (vid) vid.pause();
+                    }
+                }
+            }
+        });
     });
 }
 
@@ -239,7 +300,7 @@ function openModal(index) {
     updateModalContent();
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    renderDock(); 
+    renderDock();
 }
 
 function closeModal() {
@@ -275,7 +336,7 @@ function updateModalContent() {
 function switchItem(index) {
     mediaContainer.style.opacity = '0';
     mediaContainer.style.transform = 'scale(0.95)';
-    
+
     setTimeout(() => {
         currentItemIndex = index;
         updateModalContent();
@@ -308,7 +369,7 @@ DOCK DRAG LOGIC
 function setupDockDrag() {
     let isDraggingDock = false;
     let startX;
-    
+
     const startDrag = (x) => {
         isDraggingDock = true;
         startX = x;
@@ -325,7 +386,7 @@ function setupDockDrag() {
         if (isDraggingDock) {
             isDraggingDock = false;
             dock.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            dock.style.transform = 'translateX(-50%)'; 
+            dock.style.transform = 'translateX(-50%)';
         }
     };
 
@@ -333,153 +394,129 @@ function setupDockDrag() {
     window.addEventListener('mousemove', (e) => moveDrag(e.clientX));
     window.addEventListener('mouseup', endDrag);
 
-    dock.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), {passive: true});
-    window.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX), {passive: true});
+    dock.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), { passive: true });
+    window.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientX), { passive: true });
     window.addEventListener('touchend', endDrag);
 }
 
 /* =========================
-GRID REORDERING LOGIC
+NEW: PAGE ANIMATIONS (GSAP)
 ========================= */
-function handleMouseDown(e) {
-    if (e.button !== 0) return;
-    const target = e.currentTarget;
-    draggedElement = target;
-    
-    const onMouseMove = (moveEvent) => {
-        const dx = moveEvent.clientX - e.clientX;
-        const dy = moveEvent.clientY - e.clientY;
-        
-        if (Math.sqrt(dx*dx + dy*dy) > 10) { 
-            isDraggingGrid = true;
-            target.style.position = 'fixed';
-            target.style.zIndex = '1000';
-            target.style.width = target.offsetWidth + 'px';
-            target.style.height = target.offsetHeight + 'px';
-            target.style.pointerEvents = 'none';
-            
-            moveAt(moveEvent.pageX, moveEvent.pageY);
+function setupPageAnimations() {
+    if (typeof gsap === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // --- Header scroll effect ---
+    const header = document.getElementById('site-header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 60) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
         }
-    };
-
-    const moveAt = (pageX, pageY) => {
-        target.style.left = pageX - target.offsetWidth / 2 + 'px';
-        target.style.top = pageY - target.offsetHeight / 2 + 'px';
-        
-        target.style.display = 'none';
-        let elemBelow = document.elementFromPoint(pageX, pageY);
-        target.style.display = 'block';
-
-        if (!elemBelow) return;
-        let draggableBelow = elemBelow.closest('.bento-item');
-        
-        if (draggableBelow && draggableBelow !== draggedElement) {
-            const rectBelow = draggableBelow.getBoundingClientRect();
-            const offset = pageY - rectBelow.top;
-            if (offset > rectBelow.height / 2) {
-                gridContainer.insertBefore(draggedElement, draggableBelow.nextSibling);
-            } else {
-                gridContainer.insertBefore(draggedElement, draggableBelow);
-            }
-        }
-    };
-
-    const onMouseUp = () => {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-        
-        if (isDraggingGrid) {
-            target.style.position = 'relative';
-            target.style.left = 'auto';
-            target.style.top = 'auto';
-            target.style.zIndex = '';
-            target.style.width = 'auto';
-            target.style.height = 'auto';
-            target.style.pointerEvents = 'auto';
-            updateDataOrder();
-            setTimeout(() => { isDraggingGrid = false; }, 100);
-        }
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-}
-
-function handleTouchStart(e) {
-    const target = e.currentTarget;
-    draggedElement = target;
-
-    const onTouchMove = (moveEvent) => {
-        const touch = moveEvent.touches[0];
-        const dx = touch.clientX - e.touches[0].clientX;
-        const dy = touch.clientY - e.touches[0].clientY;
-
-        if (Math.sqrt(dx*dx + dy*dy) > 10) {
-            isDraggingGrid = true;
-            moveEvent.preventDefault();
-            target.style.position = 'fixed';
-            target.style.zIndex = '1000';
-            target.style.width = target.offsetWidth + 'px';
-            target.style.height = target.offsetHeight + 'px';
-            
-            moveAt(touch.pageX, touch.pageY);
-        }
-    };
-
-    const moveAt = (pageX, pageY) => {
-        target.style.left = pageX - target.offsetWidth / 2 + 'px';
-        target.style.top = pageY - target.offsetHeight / 2 + 'px';
-
-        target.style.display = 'none';
-        let elemBelow = document.elementFromPoint(pageX, pageY);
-        target.style.display = 'block';
-
-        if (!elemBelow) return;
-        let draggableBelow = elemBelow.closest('.bento-item');
-        
-        if (draggableBelow && draggableBelow !== draggedElement) {
-            const rectBelow = draggableBelow.getBoundingClientRect();
-            const offset = pageY - rectBelow.top;
-            if (offset > rectBelow.height / 2) {
-                gridContainer.insertBefore(draggedElement, draggableBelow.nextSibling);
-            } else {
-                gridContainer.insertBefore(draggedElement, draggableBelow);
-            }
-        }
-    };
-
-    const onTouchEnd = () => {
-        document.removeEventListener('touchmove', onTouchMove, { passive: false });
-        document.removeEventListener('touchend', onTouchEnd);
-        
-        if (isDraggingGrid) {
-            target.style.position = 'relative';
-            target.style.left = 'auto';
-            target.style.top = 'auto';
-            target.style.zIndex = '';
-            target.style.width = 'auto';
-            target.style.height = 'auto';
-            updateDataOrder();
-            setTimeout(() => { isDraggingGrid = false; }, 100);
-        }
-    };
-
-    document.addEventListener('touchmove', onTouchMove, { passive: false });
-    document.addEventListener('touchend', onTouchEnd);
-}
-
-function updateDataOrder() {
-    const newOrder = Array.from(gridContainer.children).map(el => {
-        const originalIndex = parseInt(el.dataset.index);
-        return mediaItems[originalIndex];
     });
-    mediaItems.length = 0;
-    mediaItems.push(...newOrder);
-    Array.from(gridContainer.children).forEach((el, idx) => {
-        el.dataset.index = idx;
+
+    // --- Mobile Nav ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('open');
+            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        });
+        mobileNav.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+    }
+
+    // --- Hero entrance ---
+    const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    heroTl
+        .to('#hero-badge', { opacity: 1, y: 0, duration: 0.7, delay: 0.2 })
+        .to('#hero-title', { opacity: 1, y: 0, duration: 0.8 }, '-=0.4')
+        .to('#hero-desc', { opacity: 1, y: 0, duration: 0.7 }, '-=0.45')
+        .to('#hero-metrics', { opacity: 1, y: 0, duration: 0.7 }, '-=0.3');
+
+    // --- Counter animation ---
+    const metricNums = document.querySelectorAll('.metric-num');
+    let metricsAnimated = false;
+
+    const metricsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !metricsAnimated) {
+                metricsAnimated = true;
+                metricNums.forEach(el => {
+                    const target = parseInt(el.dataset.count);
+                    if (isNaN(target)) return;
+                    let current = 0;
+                    const step = Math.ceil(target / 30);
+                    const interval = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(interval);
+                        }
+                        el.textContent = current;
+                    }, 35);
+                });
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const metricsEl = document.getElementById('hero-metrics');
+    if (metricsEl) metricsObserver.observe(metricsEl);
+
+    // --- Section intro fade-ins ---
+    document.querySelectorAll('.section-intro').forEach(intro => {
+        gsap.from(intro, {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: intro,
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }
+        });
     });
-    if(modal.classList.contains('active')) renderDock();
+
+    // --- Methodology cards stagger ---
+    const methodCards = document.querySelectorAll('.method-card');
+    gsap.to(methodCards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.methodology-grid',
+            start: 'top 80%',
+            toggleActions: 'play none none none'
+        }
+    });
+
+    // --- CTA section entrance ---
+    const ctaSection = document.querySelector('.projects-cta');
+    if (ctaSection) {
+        gsap.from('.cta-inner', {
+            opacity: 0,
+            y: 40,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: ctaSection,
+                start: 'top 75%',
+                toggleActions: 'play none none none'
+            }
+        });
+    }
 }
+
 
 /* =========================
 START

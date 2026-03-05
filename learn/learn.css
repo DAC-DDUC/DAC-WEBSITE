@@ -1107,3 +1107,10 @@ body::after {
         gap: 8px;
     }
 }
+
+#edit-is_visible {
+  width: 18px;
+  height: 18px;
+  accent-color: #22c55e;
+  cursor: pointer;
+}
