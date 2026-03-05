@@ -908,6 +908,7 @@ THUMBNAIL
     border-radius: var(--radius);
     flex-shrink: 0;
     transition: transform 0.3s ease;
+    max-width: 250px;
 }
 
 .events-list li:hover .event-thumb {
@@ -975,6 +976,7 @@ RESPONSIVE
         width: 100%;
         height: 180px;
         border-radius: var(--radius);
+        max-width: 250px;
     }
 
     .event-content {
@@ -1310,6 +1312,8 @@ Grid-based single row auto columns
     margin: 0 0 20px 0;
     text-align: left;
     line-height: 1.5;
+    display : flex;
+    flex-direction: column;
 }
 
 .team-card .team-name {
@@ -1323,6 +1327,7 @@ Grid-based single row auto columns
     color: #B1B1B1;
     font-weight: normal;
     font-size: 0.9rem;
+    max-width: 200px;
 }
 
 .card-footer {
@@ -1680,8 +1685,4 @@ RESPONSIVE DESIGN
         font-size: 2.5rem;
     }
 
-    .college-logo{
-        max-width: 6rem;
-        margin-top: 1rem;
-    }
 }
