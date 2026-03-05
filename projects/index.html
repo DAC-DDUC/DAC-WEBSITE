@@ -1,78 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Analytics Club - Projects</title>
-    <link rel="icon" href="/images/photo1769090522.jpg" type="image/png">
-    
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Projects | Data Analytics Club - DDUC</title>
+    <meta name="description"
+        content="Explore projects built by DAC students — data visualizations, ML models, dashboards, and more.">
+    <link rel="icon" href="../assets/dac-logo.png" type="image/x-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles: Located in the same ./projects/ folder -->
-    <link rel="stylesheet" href="./projects/project.css">
-    <link rel="shortcut icon" href="./assets/dac-logo.png" type="image/x-icon">
-    <link rel="icon" type="image/x-icon" href="./assets/dac-logo.png">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="projects/project.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="site-header">
-        <div class="logo-container" onclick="window.location.href='/'">
-            <!-- Assets are in root /assets, so we go up one level (../) from /projects -->
-            <img src="../assets/dac-logo.png" alt="DAC logo" class="logo-icon" style="width: 50px;">
-            <div class="logo-text">
-                <span class="logo-title">DAC</span>
-                <span class="logo-subtitle">Projects</span>
-            </div>
+    <!-- ====================== HEADER ====================== -->
+    <header class="site-header" id="site-header">
+        <div class="header-left">
+            <a href="/" class="logo-container">
+                <img src="../assets/dac-logo.png" alt="DAC Logo" class="logo-icon">
+                <div class="logo-text">
+                    <span class="logo-title">Data Analytics Club</span>
+                    <span class="logo-subtitle">DDUC</span>
+                </div>
+            </a>
         </div>
 
-        <nav class="nav-pill">
+        <nav class="nav-pill" id="nav-pill">
+            <a href="/" class="nav-link">Home</a>
             <a href="/#about" class="nav-link">About</a>
             <a href="/#solutions" class="nav-link">Initiatives</a>
             <a href="/#events" class="nav-link">Events</a>
             <a href="/#contact" class="nav-link">Contact</a>
         </nav>
 
-        <div class="cta-container">
-            <a href="/" class="join-btn">Back to Home</a>
+        <div class="header-right">
+            <a href="/" class="back-home-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Home</span>
+            </a>
+            <button class="hamburger" aria-label="Toggle navigation" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </header>
 
-    <!-- Main Content: Bento Gallery -->
-    <div class="projects-container">
-        <section class="module-section bento-section">
-            
-            <div class="dac-header">
-                <div class="heading-wrapper">
-                    <i class="fa-solid fa-layer-group floating-icon i1"></i>
-                    <i class="fa-solid fa-code floating-icon i2"></i>
-                    <i class="fa-solid fa-chart-pie floating-icon i3"></i>
-                    <i class="fa-solid fa-robot floating-icon i4"></i>
-                    <h1>DAC Projects</h1>
-                </div>
-                <p>Drag, drop, and explore our curated collection</p>
-            </div>
-
-            <!-- Grid Container -->
-            <div id="bento-grid" class="bento-grid">
-                <!-- Items injected by JS -->
-            </div>
-        </section>
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="/" class="mobile-nav-link">Home</a>
+        <a href="/#about" class="mobile-nav-link">About</a>
+        <a href="/#solutions" class="mobile-nav-link">Initiatives</a>
+        <a href="/#events" class="mobile-nav-link">Events</a>
+        <a href="/#contact" class="mobile-nav-link">Contact</a>
     </div>
 
-    <!-- BENTO MODAL OVERLAY -->
+    <!-- ====================== HERO ====================== -->
+    <section class="projects-hero" id="projects-hero">
+        <div class="hero-bg-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+        </div>
+
+        <div class="hero-inner">
+            <div class="hero-badge" id="hero-badge">
+                <span class="badge-dot"></span>
+                <span>Student Portfolio</span>
+            </div>
+
+            <h1 class="hero-title" id="hero-title">
+                Built by Students,<br>
+                <span class="gradient-text">Powered by Data</span>
+            </h1>
+
+            <p class="hero-desc" id="hero-desc">
+                Explore our curated collection of data analytics, machine learning, and visualization projects.
+                Drag to rearrange. Click to discover.
+            </p>
+
+            <div class="hero-metrics" id="hero-metrics">
+                <div class="hero-metric">
+                    <span class="metric-num" data-count="7">0</span>
+                    <span class="metric-label">Projects</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="hero-metric">
+                    <span class="metric-num" data-count="4">0</span>
+                    <span class="metric-label">Categories</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="hero-metric">
+                    <span class="metric-num" data-count="15">0</span>
+                    <span class="metric-label">Contributors</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-icons-container">
+            <i class="fa-solid fa-layer-group floating-icon fi-1"></i>
+            <i class="fa-solid fa-code floating-icon fi-2"></i>
+            <i class="fa-solid fa-chart-pie floating-icon fi-3"></i>
+            <i class="fa-solid fa-robot floating-icon fi-4"></i>
+            <i class="fa-solid fa-brain floating-icon fi-5"></i>
+            <i class="fa-solid fa-database floating-icon fi-6"></i>
+        </div>
+    </section>
+
+    <!-- ====================== KINETIC SHOWCASE ====================== -->
+    <section class="kinetic-intro">
+        <div class="section-intro">
+            <span class="section-tag">EXPLORE</span>
+            <h2 class="section-title">The Project Gallery</h2>
+            <p class="section-desc">Scroll to interact with our mechanical pipeline and explore real student projects.
+            </p>
+        </div>
+    </section>
+
+    <section class="kinetic-showcase-container" id="kinetic-showcase">
+        <div class="kinetic-sticky">
+            <div class="scanner-line"></div>
+
+            <div class="kinetic-gear-wrapper">
+                <div class="kinetic-core">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="fluidGrad1" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" style="stop-color:#ff2a6d" />
+                                <stop offset="50%" style="stop-color:#7b2fff" />
+                                <stop offset="100%" style="stop-color:#00d4ff" />
+                            </radialGradient>
+
+                            <filter id="fluidBlur">
+                                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+                                <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R"
+                                    yChannelSelector="G" />
+                                <feGaussianBlur stdDeviation="1" />
+                            </filter>
+
+                            <clipPath id="fluidClip">
+                                <circle cx="100" cy="100" r="75" />
+                            </clipPath>
+                        </defs>
+
+                        <!-- Base fluid shape -->
+                        <g clip-path="url(#fluidClip)">
+                            <circle cx="100" cy="100" r="80" fill="url(#fluidGrad1)" opacity="0.6">
+                                <animate attributeName="r" values="75;85;75" dur="4s" repeatCount="indefinite" />
+                            </circle>
+
+                            <!-- Morphing blob -->
+                            <path fill="url(#fluidGrad1)" filter="url(#fluidBlur)" opacity="0.9">
+                                <animate attributeName="d" dur="8s" repeatCount="indefinite" values="
+                                M100,30 C130,30 170,70 170,100 C170,130 130,170 100,170 C70,170 30,130 30,100 C30,70 70,30 100,30;
+                                M100,25 C140,35 175,65 175,100 C175,135 140,165 100,175 C60,165 25,135 25,100 C25,65 60,35 100,25;
+                                M100,30 C130,30 170,70 170,100 C170,130 130,170 100,170 C70,170 30,130 30,100 C30,70 70,30 100,30
+                                " />
+                            </path>
+                        </g>
+
+                        <!-- Floating orbs -->
+                        <g>
+                            <circle cx="70" cy="70" r="8" fill="#fff" opacity="0.9">
+                                <animateTransform attributeName="transform" type="translate" values="0,0; 5,-5; 0,0"
+                                    dur="3s" repeatCount="indefinite" />
+                                <animate attributeName="opacity" values="0.9;0.4;0.9" dur="3s"
+                                    repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="130" cy="85" r="6" fill="#fff" opacity="0.8">
+                                <animateTransform attributeName="transform" type="translate" values="0,0; -3,8; 0,0"
+                                    dur="4s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="90" cy="130" r="10" fill="#fff" opacity="0.7">
+                                <animateTransform attributeName="transform" type="translate" values="0,0; 8,3; 0,0"
+                                    dur="5s" repeatCount="indefinite" />
+                            </circle>
+                        </g>
+
+                        <!-- Center eye/core -->
+                        <circle cx="100" cy="100" r="20" fill="#0b142e" stroke="#fff" stroke-width="2">
+                            <animate attributeName="r" values="18;22;18" dur="2.5s" repeatCount="indefinite" />
+                        </circle>
+                        <circle cx="100" cy="100" r="8" fill="url(#fluidGrad1)">
+                            <animate attributeName="opacity" values="1;0.6;1" dur="1.5s" repeatCount="indefinite" />
+                        </circle>
+
+                        <!-- Outer glow ring -->
+                        <circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="1" opacity="0.2">
+                            <animate attributeName="stroke-dasharray" values="0,200; 200,200; 0,200" dur="6s"
+                                repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+
+                <!-- Main Gear with Improved Teeth -->
+                <div class="kinetic-gear" id="kinetic-main-gear">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <radialGradient id="gearGradient" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" style="stop-color:#6a3aff" />
+                                <stop offset="100%" style="stop-color:#223680" />
+                            </radialGradient>
+                            <filter id="gearGlow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+
+                        <!-- Gear Body -->
+                        <circle cx="100" cy="100" r="70" fill="url(#gearGradient)" stroke="#4a6fd0" stroke-width="3" />
+
+                        <!-- Gear Teeth (12 teeth) -->
+                        <g id="gear-teeth">
+                            <rect x="95" y="20" width="10" height="15" fill="#4a6fd0" rx="2" />
+                            <rect x="95" y="165" width="10" height="15" fill="#4a6fd0" rx="2" />
+                            <rect x="20" y="95" width="15" height="10" fill="#4a6fd0" rx="2" />
+                            <rect x="165" y="95" width="15" height="10" fill="#4a6fd0" rx="2" />
+
+                            <rect x="45" y="35" width="10" height="12" fill="#4a6fd0" rx="2"
+                                transform="rotate(45 50 41)" />
+                            <rect x="145" y="35" width="10" height="12" fill="#4a6fd0" rx="2"
+                                transform="rotate(-45 150 41)" />
+                            <rect x="45" y="153" width="10" height="12" fill="#4a6fd0" rx="2"
+                                transform="rotate(-45 50 159)" />
+                            <rect x="145" y="153" width="10" height="12" fill="#4a6fd0" rx="2"
+                                transform="rotate(45 150 159)" />
+
+                            <rect x="35" y="70" width="12" height="10" fill="#4a6fd0" rx="2"
+                                transform="rotate(90 41 75)" />
+                            <rect x="153" y="70" width="12" height="10" fill="#4a6fd0" rx="2"
+                                transform="rotate(90 159 75)" />
+                            <rect x="35" y="120" width="12" height="10" fill="#4a6fd0" rx="2"
+                                transform="rotate(90 41 125)" />
+                            <rect x="153" y="120" width="12" height="10" fill="#4a6fd0" rx="2"
+                                transform="rotate(90 159 125)" />
+                        </g>
+
+                        <!-- Inner Ring -->
+                        <circle cx="100" cy="100" r="45" fill="none" stroke="#6a3aff" stroke-width="2"
+                            stroke-dasharray="8 4" />
+
+                        <!-- Center Hub -->
+                        <circle cx="100" cy="100" r="25" fill="#0b142e" stroke="#6a3aff" stroke-width="3" />
+                        <circle cx="100" cy="100" r="10" fill="#6a3aff" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Left Rack -->
+            <div class="rack-vertical rack-left" id="rack-left"></div>
+
+            <!-- Right Rack -->
+            <div class="rack-vertical rack-right" id="rack-right"></div>
+        </div>
+    </section>
+
+    <!-- ====================== BENTO MODAL ====================== -->
     <div id="bento-modal" class="bento-modal-overlay">
         <div class="bento-modal-content">
             <button id="bento-close-btn" class="bento-close-btn">
                 <i class="fa-solid fa-xmark"></i>
             </button>
-            
+
             <div class="bento-main-viewer">
-                <div id="bento-media-container" class="bento-media-container">
-                    <!-- Media injected here -->
-                </div>
+                <div id="bento-media-container" class="bento-media-container"></div>
                 <div class="bento-media-info">
                     <h3 id="bento-modal-title">Project Title</h3>
                     <p id="bento-modal-desc">Project Description</p>
@@ -80,33 +288,99 @@
             </div>
         </div>
 
-        <!-- Draggable Dock -->
         <div id="bento-dock" class="bento-dock">
-            <div class="bento-dock-inner" id="bento-dock-items">
-                <!-- Thumbnails injected here -->
-            </div>
+            <div class="bento-dock-inner" id="bento-dock-items"></div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer-section">
-        <div class="footer-content">
-            <div class="footer-info">
-                <p>Data Analytics Club — DDUC</p>
-                <p>A student initiative for practical data skills.</p>
+    <!-- ====================== METHODOLOGY ====================== -->
+    <section class="methodology-section" id="methodology">
+        <div class="methodology-inner">
+            <div class="section-intro">
+                <span class="section-tag">OUR PROCESS</span>
+                <h2 class="section-title">How We Build</h2>
+                <p class="section-desc">Every DAC project follows a structured, industry-standard workflow.</p>
+            </div>
+
+            <div class="methodology-grid">
+                <div class="method-card" data-step="1">
+                    <div class="method-step-num">01</div>
+                    <div class="method-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h4>Ideation & Scoping</h4>
+                    <p>Teams pitch project ideas, define objectives, and scope data requirements.</p>
+                </div>
+
+                <div class="method-card" data-step="2">
+                    <div class="method-step-num">02</div>
+                    <div class="method-icon"><i class="fas fa-database"></i></div>
+                    <h4>Data Collection</h4>
+                    <p>Scrape, query, or integrate APIs to gather raw datasets for analysis.</p>
+                </div>
+
+                <div class="method-card" data-step="3">
+                    <div class="method-step-num">03</div>
+                    <div class="method-icon"><i class="fas fa-flask"></i></div>
+                    <h4>Analysis & Modeling</h4>
+                    <p>EDA, feature engineering, hypothesis testing, and model training.</p>
+                </div>
+
+                <div class="method-card" data-step="4">
+                    <div class="method-step-num">04</div>
+                    <div class="method-icon"><i class="fas fa-rocket"></i></div>
+                    <h4>Deploy & Present</h4>
+                    <p>Build dashboards, deploy APIs, and present findings to mentors.</p>
+                </div>
+            </div>
+
+            <div class="method-connector">
+                <div class="connector-line"></div>
+                <div class="connector-dots">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== CTA ====================== -->
+    <section class="projects-cta" id="projects-cta">
+        <div class="cta-glow"></div>
+        <div class="cta-inner">
+            <h2 class="cta-heading">Have a Project Idea?<br><span class="gradient-text">Let's Build It Together.</span>
+            </h2>
+            <p class="cta-text">DAC is always looking for passionate students to propose, lead, and collaborate on
+                data-driven projects.</p>
+            <div class="cta-actions">
+                <a href="/#contact" class="cta-primary">
+                    <span>Propose a Project</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+                <a href="/roadmap" class="cta-secondary">View Roadmap</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <p class="footer-name">Data Analytics Club — DDUC</p>
+                <p class="footer-tagline">A student initiative for practical data skills.</p>
             </div>
             <div class="footer-links">
-                <a href="https://www.linkedin.com/company/data-analytics-club-dduc-du/" target="_blank">LinkedIn</a>
-                <a href="https://www.instagram.com/dataanalyticsclubdduc/" target="_blank">Instagram</a>
+                <a href="https://linkedin.com/company/data-analytics-club-dduc-du/" target="_blank">LinkedIn</a>
+                <a href="https://instagram.com/dataanalyticsclubdduc/" target="_blank">Instagram</a>
                 <a href="https://dducollegedu.ac.in/" target="_blank">DDU College</a>
             </div>
-            <div class="footer-copyright">
-                &copy; 2026 DAC — Made by Technical Team
-            </div>
+            <div class="footer-copy">&copy; 2026 DAC — Made by Technical Team</div>
         </div>
     </footer>
 
-    <!-- Logic: Located in the same ./projects/ folder -->
-    <script type="module" src="./projects/project.js"></script>
+    <!-- Logic -->
+    <script type="module" src="projects/project.js"></script>
 </body>
+
 </html>
