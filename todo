@@ -4,15 +4,11 @@ Things required to be done:
 Minor changes: 
 
     Addition:
-        --> Link the analytics bootcamp card to /learn done
-        --> Link project labs to /projects a new page
-        done
-        --> Link Skils and certification card to /roadmap a new page
-        done
-        --> Link Industry card to /past-speakers 
-        done
-        --> Link Case comp link the google sheet as a web page to the website.
-        done
+        --> Link the analytics bootcamp card to /learn                          done
+        --> Link project labs to /projects a new page                           done
+        --> Link Skils and certification card to /roadmap a new page            done
+        --> Link Industry card to /past-speakers                                done
+        --> Link Case comp link the google sheet as a web page to the website.  done
 
     Deletion:
         --> Remove 
