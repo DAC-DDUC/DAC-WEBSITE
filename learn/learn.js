@@ -72,6 +72,7 @@ async function loadLearningData() {
           links
         )
       `)
+      .eq("is_visible", true)
       .order("sort_order", { ascending: true })
       .order("sort_order", { foreignTable: "db_chapters", ascending: true });
 
