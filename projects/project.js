@@ -1,16 +1,11 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-
 /* =========================
 BENTO GALLERY WITH SUPABASE
 ========================= */
 
 
 // --- CONFIGURATION ---
-const supabase = createClient(
-    "https://nsmioyqhnefljfpmzksk.supabase.co",
-    "sb_publishable_skwyA6GX4YTiiRpvF8PWFw_iHUFgXCZ"
-);
+import { supabase } from "../supabaseClient.js";
+
 
 // Fallback Data (Used if DB is empty or fails)
 const fallbackData = [

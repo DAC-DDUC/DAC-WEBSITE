@@ -28,13 +28,7 @@ HTML Requirements:
 /* =========================
 DATA & STATE
 ========================= */
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-// Initialize Supabase client (credentials sanitized)
-const supabase = createClient(
-  "https://nsmioyqhnefljfpmzksk.supabase.co",
-  "sb_publishable_skwyA6GX4YTiiRpvF8PWFw_iHUFgXCZ"
-);
+import { supabase } from "../supabaseClient.js";
 
 // Core data structures
 let learningData = { modules: [] };
