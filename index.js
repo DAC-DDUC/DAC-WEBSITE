@@ -1,13 +1,7 @@
 /* =========================
 SUPABASE INITIALIZATION
 ========================= */
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const supabase = createClient(
-  "https://nsmioyqhnefljfpmzksk.supabase.co",
-  "sb_publishable_skwyA6GX4YTiiRpvF8PWFw_iHUFgXCZ"
-);
-
+import { supabase } from "./supabaseClient.js";
 /* =========================
 DATA & STATE
 ========================= */
