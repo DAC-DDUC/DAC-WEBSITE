@@ -521,3 +521,34 @@ if (document.readyState === 'loading') {
 } else {
     loadProjects();
 }
+
+
+const gear = document.getElementById("gear-teeth");
+
+const teeth = 20;
+const centerX = 100;
+const centerY = 100;
+const radius = 85;
+
+for(let i=0;i<teeth;i++){
+
+    const angle = (360 / teeth) * i;
+
+    const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+
+    rect.setAttribute("x", centerX - 5);
+    rect.setAttribute("y", centerY - radius);
+
+    rect.setAttribute("width",10);
+    rect.setAttribute("height",18);
+
+    rect.setAttribute("rx",2);
+    rect.setAttribute("fill","#4a6fd0");
+
+    rect.setAttribute(
+        "transform",
+        `rotate(${angle} ${centerX} ${centerY})`
+    );
+
+    gear.appendChild(rect);
+}
