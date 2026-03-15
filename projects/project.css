@@ -1136,7 +1136,7 @@ body {
 .rack-vertical {
     position: absolute;
     width: 100px;
-    height: 100vh;
+    height: 320vh;
     /* It will be just a container we scroll, or rather, we translate the container */
     /* background: linear-gradient(90deg, #111 0%, #050505 100%); */
     background: linear-gradient(90deg, #0d1730 0%, #050914 100%);
@@ -1161,20 +1161,20 @@ body {
 .rack-left::after {
     content: "";
     position: absolute;
-    right: -14px;
+    right: -20px;
     top: 0;
     height: 100%;
-    width: 14px;
+    width: 20px;
     background-image: repeating-linear-gradient(180deg, #18275a 0px, #18275a 14px, transparent 14px, transparent 28px);
 }
 
 .rack-right::after {
     content: "";
     position: absolute;
-    left: -14px;
+    left: -20px;
     top: 0;
     height: 100%;
-    width: 14px;
+    width: 20px;
     background-image: repeating-linear-gradient(180deg, #18275a 0px, #18275a 14px, transparent 14px, transparent 28px);
 }
 
@@ -1294,15 +1294,15 @@ body {
     display: block;
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
+/*
 @media (max-width: 1024px) {
     .kinetic-showcase-container {
         display: none;
     }
 
-    /* Hide complicated gear on small screens */
-}
-
+    /* Hide complicated gear on small screens /
+} 
+    */
 /* ========================================
    RESPONSIVE
    ======================================== */
