@@ -552,3 +552,38 @@ for(let i=0;i<teeth;i++){
 
     gear.appendChild(rect);
 }
+
+/* ========================================
+   CARD SCROLL PAUSE
+   Stops scroll for 1 second when card reaches center
+======================================== */
+
+const cards = document.querySelectorAll(".k-node"); 
+// change selector if your cards use another class
+
+let scrollPaused = false;
+
+const observer = new IntersectionObserver((entries) => {
+
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting && !scrollPaused) {
+
+      scrollPaused = true;
+
+      document.body.classList.add("scroll-lock");
+
+      setTimeout(() => {
+        document.body.classList.remove("scroll-lock");
+        scrollPaused = false;
+      }, 1000);
+
+    }
+
+  });
+
+}, {
+  threshold: 0.6
+});
+
+cards.forEach(card => observer.observe(card));
