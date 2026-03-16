@@ -1396,3 +1396,12 @@ body {
         padding: 9px 14px;
     }
 }
+
+/* ========================================
+   SCROLL PAUSE SYSTEM
+   ======================================== */
+
+.scroll-lock {
+    overflow: hidden;
+    height: 100vh;
+}
