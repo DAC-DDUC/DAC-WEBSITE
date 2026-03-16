@@ -551,6 +551,7 @@ body::after {
     margin-top: 20px;
     padding-top: 12px;
     border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    overflow-y: visible;
 }
 
 /* Allow module card to expand smoothly */
@@ -588,7 +589,7 @@ body::after {
     border: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
     transition: all 0.3s ease;
-    min-height: 100px;
+    min-height: min-content;
     position: relative;
     overflow: hidden;
 }
