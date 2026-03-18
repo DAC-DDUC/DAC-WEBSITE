@@ -591,7 +591,6 @@ body::after {
     transition: all 0.3s ease;
     min-height: min-content;
     position: relative;
-    overflow: hidden;
 }
 
 .chapter-card::before {
