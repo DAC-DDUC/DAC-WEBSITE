@@ -938,7 +938,6 @@ EVENT CARD
     box-shadow 0.3s ease;
   overflow: hidden;
   min-width: 100px;
-  max-width: 400px;
   width: 100%;
 }
 
@@ -952,7 +951,6 @@ THUMBNAIL
 ========================= */
 .event-thumb {
   width: auto;
-  max-height: 100px;
   object-fit: cover;
   border-radius: var(--radius);
   flex-shrink: 0;
