@@ -304,15 +304,22 @@ function showSuccess(message) {
 
 
 function handleEventVisibility() {
-  const event = eventData?.events?.[0]; // or [0] if needed
+  console.log("Function running");
 
-  if (!event) {
-    console.warn('No event found at index 0');
-    return;
-  }
+  const el = document.querySelector('.new-event');
+  console.log("Element:", el);
 
-  if (new Date(event.event_date) > new Date()) {
-    document.querySelector('.new-event')?.classList.add('hidden');
+  const now = new Date();
+
+  const hasUpcoming = eventData.events.some(e =>
+    new Date(e.event_date) > now
+  );
+
+  console.log("Has upcoming:", hasUpcoming);
+
+  if (!hasUpcoming) {
+    console.log("Hiding element");
+    el?.classList.add('hidden');
   }
 }
 
