@@ -307,7 +307,7 @@ function handleEventVisibility() {
   console.log("Function running");
 const firstEvent = eventData.events[0];
 
-if (new Date(firstEvent.event_date) > new Date()) {
+if (new Date(firstEvent.event_date) < new Date()) {
   document.querySelector('.new-event').style.display = 'none';
 };
   console.log("Function ended handleEventVisibility");
