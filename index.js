@@ -312,7 +312,7 @@ function handleEventVisibility() {
   }
 
   if (new Date(event.event_date) > new Date()) {
-    document.getElementById('new-event')?.classList.add('hidden');
+    document.querySelector('.new-event')?.classList.add('hidden');
   }
 }
 
