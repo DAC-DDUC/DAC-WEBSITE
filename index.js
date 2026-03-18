@@ -71,7 +71,8 @@ async function loadEventData() {
         title: event.title,
         description: event.description,
         event_date: event.event_date,
-        image: event.image_url || './events/imgs/img1.png' // fallback if no image
+        image: event.image_url || './events/imgs/img1.png', // fallback if no image
+        link: event.link || './competitions'
       }))
     };
 
@@ -103,7 +104,7 @@ function renderEvents() {
     newEvent.innerHTML = `
       ${e.image ? `<img src="${e.image}" alt="${e.title}" class="event-thumb">` : ''}
       <div class="event-content">
-        <a href="https://example.com" target="_blank" rel="noopener" class="event-title">
+        <a href="${e.link}" target="_blank" rel="noopener" class="event-title">
           <strong>${e.title}</strong>
         </a>
         <div>${e.description}</div>
