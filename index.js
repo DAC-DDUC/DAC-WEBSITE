@@ -305,22 +305,12 @@ function showSuccess(message) {
 
 function handleEventVisibility() {
   console.log("Function running");
+const firstEvent = eventData.events[0];
 
-  const el = document.querySelector('.new-event');
-  console.log("Element:", el);
-
-  const now = new Date();
-
-  const hasUpcoming = eventData.events.some(e =>
-    new Date(e.event_date) > now
-  );
-
-  console.log("Has upcoming:", hasUpcoming);
-
-  if (!hasUpcoming) {
-    console.log("Hiding element");
-    el?.classList.add('hidden');
-  }
+if (new Date(firstEvent.event_date) > new Date()) {
+  document.querySelector('.new-event').style.display = 'none';
+};
+  console.log("Function ended handleEventVisibility");
 }
 
 /* =========================
