@@ -78,6 +78,7 @@ async function loadEventData() {
 
     console.log('Event data loaded from Supabase');
     renderEvents();
+    handleEventVisibility();
   } catch (error) {
     console.error('Supabase failed, using local JSON', error);
 
@@ -302,12 +303,18 @@ function showSuccess(message) {
 }
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (new Date(eventData.events[1].event_date) > new Date()) {
-      document.getElementById('new-event')?.classList.add('hidden');
-    }
-});
+function handleEventVisibility() {
+  const event = eventData?.events?.[0]; // or [0] if needed
 
+  if (!event) {
+    console.warn('No event found at index 0');
+    return;
+  }
+
+  if (new Date(event.event_date) > new Date()) {
+    document.getElementById('new-event')?.classList.add('hidden');
+  }
+}
 
 /* =========================
 INITIALIZATION
