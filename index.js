@@ -301,6 +301,14 @@ function showSuccess(message) {
   setTimeout(() => notification.remove(), 5000);
 }
 
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (new Date(eventData.events[1].event_date) > new Date()) {
+      document.getElementById('new-event')?.classList.add('hidden');
+    }
+});
+
+
 /* =========================
 INITIALIZATION
 ========================= */
