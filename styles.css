@@ -1,15 +1,15 @@
 /* ========================================
-CONSOLIDATED CSS - 2026-01-27
-- Removed duplicate token systems (kept detailed navy/orb scale)
-- Eliminated redundant component definitions
-- Merged responsive breakpoints
-- Verified all section styles intact
-SOURCE: Original 1,482 lines → Consolidated 968 lines
-======================================== */
+   CONSOLIDATED CSS - 2026-01-27
+   - Removed duplicate token systems (kept detailed navy/orb scale)
+   - Eliminated redundant component definitions
+   - Merged responsive breakpoints
+   - Verified all section styles intact
+   SOURCE: Original 1,482 lines → Consolidated 968 lines
+   ======================================== */
 
-/* =======================================
-GLOBAL RESET & SMOOTH SCROLLING
-======================================== */
+/* ========================================
+   GLOBAL RESET & SMOOTH SCROLLING
+   ======================================== */
 
 * {
   margin: 0;
@@ -22,8 +22,9 @@ html {
 }
 
 /* ========================================
-DESIGN TOKENS - COLOR SYSTEM
-======================================== */
+   DESIGN TOKENS - COLOR SYSTEM
+   ======================================== */
+
 :root {
   /* Navy/Indigo Scale */
   --navy-1000: #050914;
@@ -78,8 +79,9 @@ DESIGN TOKENS - COLOR SYSTEM
 }
 
 /* ========================================
-BODY & BACKGROUND STACK
-======================================== */
+   BODY & BACKGROUND STACK
+   ======================================== */
+
 body {
   margin: 0;
   font-family: "Inter", "Manrope", sans-serif;
@@ -91,54 +93,18 @@ body {
     linear-gradient(90deg, rgba(58, 78, 160, 0.45) 1px, transparent 1px),
     /* Layered Semicircles (Bottom) */
     radial-gradient(circle 306px at 50% 86vh, #010214 98%, transparent 100%),
-    radial-gradient(
-      circle 641px at 50% 88vh,
-      rgba(1, 2, 20, 0.2) 100%,
-      transparent 100%
-    ),
-    radial-gradient(
-      circle 1019px at 50% 102.2vh,
-      rgba(1, 2, 20, 0.1) 99.5%,
-      transparent 100%
-    ),
+    radial-gradient(circle 641px at 50% 88vh, rgba(1, 2, 20, 0.2) 100%, transparent 100%),
+    radial-gradient(circle 1019px at 50% 102.2vh, rgba(1, 2, 20, 0.1) 99.5%, transparent 100%),
     /* Side Glows (Left) */
-    radial-gradient(
-        circle at 10% 20%,
-        rgba(69, 38, 208, 0.35) 0%,
-        transparent 35%
-      ),
-    radial-gradient(
-      circle at 5% 10%,
-      rgba(49, 27, 154, 0.4) 0%,
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 15% 15%,
-      rgba(30, 17, 100, 0.5) 0%,
-      transparent 60%
-    ),
+    radial-gradient(circle at 10% 20%, rgba(69, 38, 208, 0.35) 0%, transparent 35%),
+    radial-gradient(circle at 5% 10%, rgba(49, 27, 154, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 15% 15%, rgba(30, 17, 100, 0.5) 0%, transparent 60%),
     /* Side Glows (Right - Mirrored) */
-    radial-gradient(
-        circle at 90% 20%,
-        rgba(69, 38, 208, 0.35) 0%,
-        transparent 35%
-      ),
-    radial-gradient(
-      circle at 95% 10%,
-      rgba(49, 27, 154, 0.4) 0%,
-      transparent 45%
-    ),
-    radial-gradient(
-      circle at 85% 15%,
-      rgba(30, 17, 100, 0.5) 0%,
-      transparent 60%
-    ),
-    /* Bottom Glow   ---  */
-    radial-gradient(
-        circle at 90% 90%,
-        rgba(69, 38, 208, 0.1) 0%,
-        transparent 50%
-      );
+    radial-gradient(circle at 90% 20%, rgba(69, 38, 208, 0.35) 0%, transparent 35%),
+    radial-gradient(circle at 95% 10%, rgba(49, 27, 154, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(30, 17, 100, 0.5) 0%, transparent 60%),
+    /* Bottom Glow */
+    radial-gradient(circle at 90% 90%, rgba(69, 38, 208, 0.1) 0%, transparent 50%);
   background-size:
     var(--grid-size) var(--grid-size),
     var(--grid-size) var(--grid-size),
@@ -160,66 +126,8 @@ body {
 }
 
 /* ========================================
-HERO SECTION
-======================================== */
-
-.hero-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative;
-  z-index: 10;
-}
-
-/* ========================================
-NEW EVENT SECTION
-======================================== */
-.new-event a {
-  color: #ffffff; /* text on gradient */
-  text-decoration: none;
-  font-weight: 700;
-  padding: 6px 16px;
-  border-radius: var(--radius);
-  display: inline-block;
-
-  /* Semi-transparent gradient background */
-  background: linear-gradient(90deg, rgba(83,50,227,0.8), rgba(162,130,247,0.8));
-  border: 1px solid rgba(83,50,227,0.8);
-  text-shadow: 0 0 8px rgba(255,255,255,0.8);
-  box-shadow: 0 0 25px rgba(69, 38, 208, 0.4), 0 0 35px rgba(69, 38, 208, 0.6);
-
-  animation: floatBounce 2.5s ease-in-out infinite, glowPulse 2s ease-in-out infinite alternate;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-/* Hover effect for link */
-.new-event a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 35px rgba(69, 38, 208, 0.6);
-}
-
-/* =========================
-ANIMATIONS
-========================= */
-@keyframes floatBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
-@keyframes glowPulse {
-  0% {
-    box-shadow: 0 0 20px rgba(69, 38, 208, 0.4), 0 0 30px rgba(69, 38, 208, 0.6);
-  }
-  100% {
-    box-shadow: 0 0 25px rgba(69, 38, 208, 0.6), 0 0 35px rgba(69, 38, 208, 0.8);
-  }
-}
-
-
-/* ========================================
-HEADER
-======================================== */
+   HEADER & NAVIGATION
+   ======================================== */
 
 .site-header {
   display: flex;
@@ -228,25 +136,20 @@ HEADER
   padding: 16px 40px;
   width: 100%;
   box-sizing: border-box;
-
   position: sticky;
   top: 0;
   z-index: 1000;
-
   position: relative; /* required for centered nav */
-
-  /*backdrop-filter: blur(20px);*/
+  /* backdrop-filter: blur(20px); */
 }
 
-/* LEFT SIDE */
-
+/* Header Left */
 .header-left {
   display: flex;
   align-items: center;
 }
 
-/* LOGO */
-
+/* Logo */
 .logo-container {
   display: flex;
   align-items: center;
@@ -280,23 +183,18 @@ HEADER
   opacity: 0.8;
 }
 
-/* NAVIGATION */
-
+/* Navigation Pill */
 .nav-pill {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-
   display: flex;
   align-items: center;
   gap: 28px;
-
   background: rgba(1, 2, 20, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.15);
-
   padding: 10px 30px;
   border-radius: 50px;
-
   backdrop-filter: blur(40px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
@@ -313,8 +211,7 @@ HEADER
   color: white;
 }
 
-/* RIGHT SIDE */
-
+/* Header Right */
 .header-right {
   display: flex;
   align-items: center;
@@ -326,8 +223,7 @@ HEADER
   height: auto;
 }
 
-/* HAMBURGER MENU */
-
+/* Hamburger Menu */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -346,8 +242,16 @@ HEADER
 }
 
 /* ========================================
-HERO CONTENT
-======================================== */
+   HERO SECTION
+   ======================================== */
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
 
 .content {
   flex: 1;
@@ -356,84 +260,116 @@ HERO CONTENT
   justify-content: center;
   align-items: center;
   text-align: center;
-
   padding-bottom: 10vh;
-
   position: relative;
   z-index: 25;
 }
 
-/* HERO TITLE */
-
+/* Hero Title */
 h1.hero-title {
   font-size: 5rem;
   font-weight: 700;
-
   margin-bottom: 0.5rem;
   margin-top: 0;
-
   letter-spacing: -0.03em;
-
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(255, 255, 255, 0.7) 100%
-  );
-
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
   text-shadow: 0 0 30px rgba(69, 38, 208, 0.3);
 }
 
-/* HERO DESCRIPTION */
-
+/* Hero Description */
 .hero-desc {
   font-size: 1.25rem;
   color: rgba(200, 220, 255, 0.7);
-
   margin-top: 0;
   margin-bottom: 3rem;
-
   font-weight: 300;
 }
 
-/* CTA BUTTON */
-
+/* CTA Button */
 .cta-button {
   background: linear-gradient(90deg, #4526d0, #9470f4);
-
   border: none;
   padding: 16px 48px;
-
   border-radius: 50px;
-
   color: white;
   font-size: 1.1rem;
   font-weight: 600;
-
   cursor: pointer;
-
   box-shadow: 0 0 25px rgba(69, 38, 208, 0.4);
-
   transition: all 0.3s ease;
-
   text-decoration: none;
   display: inline-block;
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
-
   box-shadow: 0 0 35px rgba(69, 38, 208, 0.6);
-
   background: linear-gradient(90deg, #5332e3, #a282f7);
 }
 
+/* New Event Link */
+.new-event a {
+  color: #ffffff; /* text on gradient */
+  text-decoration: none;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  display: inline-block;
+  /* Semi-transparent gradient background */
+  background: linear-gradient(90deg, rgba(83, 50, 227, 0.8), rgba(162, 130, 247, 0.8));
+  border: 1px solid rgba(83, 50, 227, 0.8);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 25px rgba(69, 38, 208, 0.4),
+    0 0 35px rgba(69, 38, 208, 0.6);
+  animation:
+    floatBounce 2.5s ease-in-out infinite,
+    glowPulse 2s ease-in-out infinite alternate;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.new-event a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(69, 38, 208, 0.6);
+}
+
 /* ========================================
-TIMELINE SECTION
-======================================== */
+   ANIMATIONS
+   ======================================== */
+
+@keyframes floatBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes glowPulse {
+  0% {
+    box-shadow:
+      0 0 20px rgba(69, 38, 208, 0.4),
+      0 0 30px rgba(69, 38, 208, 0.6);
+  }
+  100% {
+    box-shadow:
+      0 0 25px rgba(69, 38, 208, 0.6),
+      0 0 35px rgba(69, 38, 208, 0.8);
+  }
+}
+
+/* ========================================
+   TIMELINE SECTION
+   ======================================== */
+
 .timeline-section {
   width: 100%;
   display: flex;
@@ -443,12 +379,7 @@ TIMELINE SECTION
   margin-top: -30vh;
   padding-top: 150px;
   padding-bottom: 80px;
-  background: linear-gradient(
-    180deg,
-    rgba(1, 2, 20, 0) 0%,
-    rgba(1, 2, 20, 0.6) 50%,
-    #010214 100%
-  );
+  background: linear-gradient(180deg, rgba(1, 2, 20, 0) 0%, rgba(1, 2, 20, 0.6) 50%, #010214 100%);
 }
 
 .timeline-track {
@@ -466,13 +397,7 @@ TIMELINE SECTION
   left: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.15) 10%,
-    rgba(255, 255, 255, 0.15) 90%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 10%, rgba(255, 255, 255, 0.15) 90%, transparent 100%);
   z-index: 0;
 }
 
@@ -553,7 +478,7 @@ TIMELINE SECTION
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
-/* Gradient Section */
+/* Gradient Section Borders */
 .gradient {
   position: relative;
   width: 100%;
@@ -569,20 +494,12 @@ TIMELINE SECTION
   /* Technical border thickness */
   z-index: 100;
   pointer-events: none;
-
   /* LINEAR GRADIENT MAPPING:
        1. Top: Bright Cyan accent (About Section start)
        2. Middle: Navy-600 (Transition)
        3. Bottom: Deep Navy to Black (Meet the Team style)
     */
-  background: linear-gradient(
-    to bottom,
-    var(--cyan-500) 0%,
-    var(--navy-600) 40%,
-    #111a3b 75%,
-    #000000 100%
-  );
-
+  background: linear-gradient(to bottom, var(--cyan-500) 0%, var(--navy-600) 40%, #111a3b 75%, #000000 100%);
   /* Subtle glow that matches the 'Meet the Team' atmosphere */
   box-shadow: 0 0 12px rgba(17, 26, 59, 0.5);
 }
@@ -596,8 +513,9 @@ TIMELINE SECTION
 }
 
 /* ========================================
-ABOUT SECTION
-======================================== */
+   ABOUT SECTION
+   ======================================== */
+
 .about-section {
   width: 100%;
   background: var(--bg-deep);
@@ -642,21 +560,10 @@ ABOUT SECTION
   color: var(--text-main);
 }
 
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .info-row p {
-    font-size: 1.05rem;
-    line-height: 1.6;
-  }
-}
-
 /* ========================================
-STATS SECTION
-======================================== */
+   STATS SECTION
+   ======================================== */
+
 .stats-footer {
   width: 100%;
   background-color: rgba(3, 5, 46, 0.5);
@@ -676,12 +583,7 @@ STATS SECTION
   left: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(69, 38, 208, 0.6) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg, transparent 0%, rgba(69, 38, 208, 0.6) 50%, transparent 100%);
   box-shadow: 0 -2px 10px rgba(69, 38, 208, 0.4);
 }
 
@@ -717,8 +619,9 @@ STATS SECTION
 }
 
 /* ========================================
-SOLUTIONS/INITIATIVES SECTION
-======================================== */
+   SOLUTIONS / INITIATIVES SECTION
+   ======================================== */
+
 .solutions-section {
   width: 100%;
   background-color: var(--section-bg);
@@ -805,8 +708,9 @@ SOLUTIONS/INITIATIVES SECTION
 }
 
 /* ========================================
-CURRICULUM SECTION
-======================================== */
+   CURRICULUM SECTION
+   ======================================== */
+
 .curriculum-section {
   width: 100%;
   background-color: var(--section-bg);
@@ -929,9 +833,11 @@ CURRICULUM SECTION
   left: 0;
   color: rgba(255, 255, 255, 0.4);
 }
+
 /* ========================================
-EVENTS SECTION
-======================================== */
+   EVENTS SECTION
+   ======================================== */
+
 .events-section {
   width: 100%;
   padding: 80px 0;
@@ -954,9 +860,7 @@ EVENTS SECTION
   letter-spacing: -0.5px;
 }
 
-/* =========================
-EVENTS LIST
-========================= */
+/* Events List */
 .events-list {
   list-style: none;
   padding: 0;
@@ -967,9 +871,7 @@ EVENTS LIST
   justify-content: center; /* Optional: center the wrapped items */
 }
 
-/* =========================
-EVENT CARD
-========================= */
+/* Event Card */
 .events-list li {
   display: flex;
   flex-direction: row;
@@ -992,9 +894,7 @@ EVENT CARD
   box-shadow: var(--shadow-strong);
 }
 
-/* =========================
-THUMBNAIL
-========================= */
+/* Thumbnail */
 .event-thumb {
   width: auto;
   object-fit: cover;
@@ -1008,9 +908,7 @@ THUMBNAIL
   transform: scale(1.05);
 }
 
-/* =========================
-EVENT CONTENT
-========================= */
+/* Event Content */
 .event-content {
   display: flex;
   flex-direction: column;
@@ -1048,40 +946,10 @@ EVENT CONTENT
   text-decoration: underline;
 }
 
-/* =========================
-RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  .events-section .section-title {
-    font-size: 2rem;
-  }
-
-  .events-list {
-    gap: 20px;
-  }
-
-  .events-list li {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 500px;
-  }
-
-  .event-thumb {
-    width: 100%;
-    height: 180px;
-    border-radius: var(--radius);
-    max-width: 250px;
-  }
-
-  .event-content {
-    gap: 12px;
-  }
-}
-
 /* ========================================
-ACHIEVEMENTS SECTION
-======================================== */
+   ACHIEVEMENTS SECTION
+   ======================================== */
+
 .achievements-section {
   width: 100%;
   background-color: var(--section-bg);
@@ -1139,8 +1007,9 @@ ACHIEVEMENTS SECTION
 }
 
 /* ========================================
-STORIES SECTION (Testimonials)
-======================================== */
+   STORIES SECTION (TESTIMONIALS)
+   ======================================== */
+
 .stories-section {
   position: relative;
   width: 100%;
@@ -1158,24 +1027,9 @@ STORIES SECTION (Testimonials)
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(
-      ellipse 64% 6% at 50% 3%,
-      rgba(72, 82, 140, 0.2) 0%,
-      rgba(12, 13, 35, 0.18) 45%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 56% 3% at 50% 15%,
-      rgba(64, 68, 126, 0.25) 30%,
-      rgba(16, 19, 39, 0.07) 60%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 62% 7% at 49% 94%,
-      rgba(54, 58, 92, 0.16) 15%,
-      rgba(24, 27, 43, 0.07) 70%,
-      transparent 98%
-    );
+    radial-gradient(ellipse 64% 6% at 50% 3%, rgba(72, 82, 140, 0.2) 0%, rgba(12, 13, 35, 0.18) 45%, transparent 100%),
+    radial-gradient(ellipse 56% 3% at 50% 15%, rgba(64, 68, 126, 0.25) 30%, rgba(16, 19, 39, 0.07) 60%, transparent 100%),
+    radial-gradient(ellipse 62% 7% at 49% 94%, rgba(54, 58, 92, 0.16) 15%, rgba(24, 27, 43, 0.07) 70%, transparent 98%);
   mix-blend-mode: lighten;
 }
 
@@ -1260,18 +1114,15 @@ STORIES SECTION (Testimonials)
 }
 
 /* ========================================
-TEAM SECTION
-======================================== */
+   TEAM SECTION
+   ======================================== */
+
 .team-section-wrapper {
   position: relative;
   z-index: 30;
   width: 100%;
   background-image:
-    radial-gradient(
-      circle at center,
-      rgba(100, 149, 237, 0.03) 0%,
-      transparent 70%
-    ),
+    radial-gradient(circle at center, rgba(100, 149, 237, 0.03) 0%, transparent 70%),
     radial-gradient(circle at top, #111a3b, #000000);
   background-repeat: no-repeat;
   background-size: cover;
@@ -1333,9 +1184,9 @@ TEAM SECTION
 
 /* Large phones */
 /* ========================================
-FIXED: Endless carousel only on mobile
-Grid-based single row auto columns
-======================================== */
+   FIXED: Endless carousel only on mobile
+   Grid-based single row auto columns
+   ======================================== */
 @media (max-width: 600px) {
   .team-section-wrapper {
     padding: 80px 0 60px 0;
@@ -1474,8 +1325,9 @@ Grid-based single row auto columns
 }
 
 /* ========================================
-CONTACT SECTION
-======================================== */
+   CONTACT SECTION
+   ======================================== */
+
 .contact-section {
   width: 100%;
   background: var(--section-bg);
@@ -1619,8 +1471,9 @@ CONTACT SECTION
 }
 
 /* ========================================
-FOOTER
-======================================== */
+   FOOTER
+   ======================================== */
+
 .footer {
   width: 100%;
   background: #000000;
@@ -1665,8 +1518,88 @@ FOOTER
 }
 
 /* ========================================
-RESPONSIVE DESIGN
-======================================== */
+   CHEVRONS ANIMATION
+   ======================================== */
+
+.chevrons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+  z-index: 20;
+  margin-top: -30vh;
+  padding-top: 150px;
+  padding-bottom: 80px;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(1, 2, 20, 0) 0%, rgba(1, 2, 20, 0.6) 50%, #010214 100%);
+}
+
+/* base chevron */
+.chevron {
+  width: 20px;
+  height: 20px;
+  border-right: 6px solid #7b00ff;
+  border-bottom: 6px solid #7b00ff;
+  opacity: 0.3;
+  filter: drop-shadow(0 0 6px #7b00ff);
+  animation-delay: calc(var(--i) * 0.2s);
+}
+
+/* right arrows */
+.chevron:not(.opp) {
+  transform: rotate(-45deg);
+  animation: rightMove 1.5s infinite;
+}
+
+/* left arrows */
+.chevron.opp {
+  transform: rotate(45deg);
+  animation: leftMove 1.5s infinite;
+  display: none;
+}
+
+.chevron.hidden {
+  display: none;
+}
+
+/* right movement */
+@keyframes rightMove {
+  0% {
+    opacity: 0.2;
+    transform: translateX(-10px) rotate(-45deg);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px #7b00ff) drop-shadow(0 0 20px #7b00ff);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateX(10px) rotate(-45deg);
+  }
+}
+
+/* left movement */
+@keyframes leftMove {
+  0% {
+    opacity: 0.2;
+    transform: translateY(-10px) rotate(45deg);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px #7b00ff) drop-shadow(0 0 20px #7b00ff);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateY(10px) rotate(45deg);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
 @media (max-width: 1200px) {
   .curriculum-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1745,57 +1678,58 @@ RESPONSIVE DESIGN
   }
 }
 
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .info-row p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .events-section .section-title {
+    font-size: 2rem;
+  }
+
+  .events-list {
+    gap: 20px;
+  }
+
+  .events-list li {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+  }
+
+  .event-thumb {
+    width: 100%;
+    height: 180px;
+    border-radius: var(--radius);
+    max-width: 250px;
+  }
+
+  .event-content {
+    gap: 12px;
+  }
+}
+
 @media (max-width: 600px) {
   body {
     background-image:
       linear-gradient(0deg, rgba(58, 78, 160, 0.45) 1px, transparent 1px),
       linear-gradient(90deg, rgba(58, 78, 160, 0.45) 1px, transparent 1px),
       radial-gradient(circle 306px at 50% 86vh, #070d22 98%, transparent 100%),
-      radial-gradient(
-        circle 641px at 50% 88vh,
-        rgba(12, 20, 48, 0.35) 100%,
-        transparent 100%
-      ),
-      radial-gradient(
-        circle 1019px at 50% 102.2vh,
-        rgba(20, 32, 72, 0.25) 99.5%,
-        transparent 100%
-      ),
-      radial-gradient(
-        circle at 10% 20%,
-        rgba(70, 98, 190, 0.45) 0%,
-        transparent 35%
-      ),
-      radial-gradient(
-        circle at 5% 10%,
-        rgba(46, 68, 150, 0.55) 0%,
-        transparent 45%
-      ),
-      radial-gradient(
-        circle at 15% 15%,
-        rgba(30, 48, 120, 0.65) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        circle at 90% 20%,
-        rgba(70, 98, 190, 0.45) 0%,
-        transparent 35%
-      ),
-      radial-gradient(
-        circle at 95% 10%,
-        rgba(46, 68, 150, 0.55) 0%,
-        transparent 45%
-      ),
-      radial-gradient(
-        circle at 85% 15%,
-        rgba(30, 48, 120, 0.65) 0%,
-        transparent 60%
-      ),
-      radial-gradient(
-        circle at 90% 90%,
-        rgba(90, 120, 220, 0.25) 0%,
-        transparent 50%
-      );
+      radial-gradient(circle 641px at 50% 88vh, rgba(12, 20, 48, 0.35) 100%, transparent 100%),
+      radial-gradient(circle 1019px at 50% 102.2vh, rgba(20, 32, 72, 0.25) 99.5%, transparent 100%),
+      radial-gradient(circle at 10% 20%, rgba(70, 98, 190, 0.45) 0%, transparent 35%),
+      radial-gradient(circle at 5% 10%, rgba(46, 68, 150, 0.55) 0%, transparent 45%),
+      radial-gradient(circle at 15% 15%, rgba(30, 48, 120, 0.65) 0%, transparent 60%),
+      radial-gradient(circle at 90% 20%, rgba(70, 98, 190, 0.45) 0%, transparent 35%),
+      radial-gradient(circle at 95% 10%, rgba(46, 68, 150, 0.55) 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(30, 48, 120, 0.65) 0%, transparent 60%),
+      radial-gradient(circle at 90% 90%, rgba(90, 120, 220, 0.25) 0%, transparent 50%);
   }
 
   .logo-icon {
@@ -1829,91 +1763,9 @@ RESPONSIVE DESIGN
   .stat-num {
     font-size: 2.5rem;
   }
-}
-.chevrons {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  justify-content: center;
-  position: relative;
-  z-index: 20;
-  margin-top: -30vh;
-  padding-top: 150px;
-  padding-bottom: 80px;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(
-    180deg,
-    rgba(1, 2, 20, 0) 0%,
-    rgba(1, 2, 20, 0.6) 50%,
-    #010214 100%
-  );
-}
 
-/* base chevron */
-.chevron {
-  width: 20px;
-  height: 20px;
-
-  border-right: 6px solid #7b00ff;
-  border-bottom: 6px solid #7b00ff;
-
-  opacity: 0.3;
-  filter: drop-shadow(0 0 6px #7b00ff);
-
-  animation-delay: calc(var(--i) * 0.2s);
-}
-
-/* right arrows */
-.chevron:not(.opp) {
-  transform: rotate(-45deg);
-  animation: rightMove 1.5s infinite;
-}
-
-/* left arrows */
-.chevron.opp {
-  transform: rotate(45deg);
-  animation: leftMove 1.5s infinite;
-  display: none;
-}
-
-.chevron.hidden {
-  display: none;
-}
-
-/* right movement */
-@keyframes rightMove {
-  0% {
-    opacity: 0.2;
-    transform: translateX(-10px) rotate(-45deg);
-  }
-
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 10px #7b00ff) drop-shadow(0 0 20px #7b00ff);
-  }
-
-  100% {
-    opacity: 0.2;
-    transform: translateX(10px) rotate(-45deg);
-  }
-}
-
-/* left movement */
-
-@keyframes leftMove {
-  0% {
-    opacity: 0.2;
-    transform: translateY(-10px) rotate(45deg);
-  }
-
-  50% {
-    opacity: 1;
-    filter: drop-shadow(0 0 10px #7b00ff) drop-shadow(0 0 20px #7b00ff);
-  }
-
-  100% {
-    opacity: 0.2;
-    transform: translateY(10px) rotate(45deg);
+  .chevrons {
+    padding-top: 20px;
+    margin-top: -14vh;
   }
 }
