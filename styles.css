@@ -172,6 +172,52 @@ HERO SECTION
 }
 
 /* ========================================
+NEW EVENT SECTION
+======================================== */
+.new-event a {
+  color: #ffffff; /* text on gradient */
+  text-decoration: none;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: var(--radius);
+  display: inline-block;
+
+  /* Semi-transparent gradient background */
+  background: linear-gradient(90deg, rgba(83,50,227,0.8), rgba(162,130,247,0.8));
+  border: 1px solid rgba(83,50,227,0.8);
+  text-shadow: 0 0 8px rgba(255,255,255,0.8);
+  box-shadow: 0 0 25px rgba(69, 38, 208, 0.4), 0 0 35px rgba(69, 38, 208, 0.6);
+
+  animation: floatBounce 2.5s ease-in-out infinite, glowPulse 2s ease-in-out infinite alternate;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Hover effect for link */
+.new-event a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 35px rgba(69, 38, 208, 0.6);
+}
+
+/* =========================
+ANIMATIONS
+========================= */
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes glowPulse {
+  0% {
+    box-shadow: 0 0 20px rgba(69, 38, 208, 0.4), 0 0 30px rgba(69, 38, 208, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(69, 38, 208, 0.6), 0 0 35px rgba(69, 38, 208, 0.8);
+  }
+}
+
+
+/* ========================================
 HEADER
 ======================================== */
 
@@ -938,7 +984,6 @@ EVENT CARD
     box-shadow 0.3s ease;
   overflow: hidden;
   min-width: 100px;
-  max-width: 400px;
   width: 100%;
 }
 
@@ -952,7 +997,6 @@ THUMBNAIL
 ========================= */
 .event-thumb {
   width: auto;
-  max-height: 100px;
   object-fit: cover;
   border-radius: var(--radius);
   flex-shrink: 0;
